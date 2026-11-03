@@ -23,6 +23,9 @@ __pycache__/
 .venv/
 venv/
 node_modules/
+*.egg-info/
+/build/
+/dist/
 .DS_Store
 .idea/
 .vscode/

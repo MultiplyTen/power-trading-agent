@@ -1,0 +1,13 @@
+{
+  "algorithm": "sha256",
+  "files": {
+    "hourly.csv": "9b67ec7669524d8a2d049d8b631673f2413d336d23c4504110028e203b0256d0",
+    "input.json": "7e27f7d5e33e8728664cce82404140a538f943712cde1e73e5137349a7c207e0",
+    "report.md": "6908ac50f4e80d50e87fd02eee8f75d1be059e5e9bd060b084c59c499443c032",
+    "results.json": "a8f987d03a419186f0b6d1b9d013ea86916236e39e562e6ec099ab92e0df2105",
+    "run_meta.json": "1ab952a9b9460ace19b6b973561ff6cc4c1b3f021e30059114ccb637d0336287"
+  },
+  "mutable_ledger": "ledger.sqlite3",
+  "scope": "synthetic",
+  "version": "1.1.0"
+}

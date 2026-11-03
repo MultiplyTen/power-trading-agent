@@ -1,0 +1,11 @@
+{
+  "name": "parse_customer_event",
+  "arguments": {
+    "text": "2026-01-21 10:00 至 2026-01-21 15:00 停产",
+    "portfolio_id": "synthetic-retailer",
+    "customer_id": "customer-a",
+    "known_at": "2026-01-20T10:00:00+08:00",
+    "source": "invented-customer-message",
+    "event_id": "proposed-stop-001"
+  }
+}

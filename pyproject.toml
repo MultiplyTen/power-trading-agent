@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "power-trading-agent"
+version = "1.1.0"
+description = "Auditable local electricity-trading research runtime"
+requires-python = ">=3.9"
+dependencies = []
+
+[project.scripts]
+power-trading-agent = "power_trading_agent.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["power_trading_agent*"]

@@ -1,0 +1,5 @@
+Python 3.12.14; setuptools 84.1.0; wheel 0.48.0
+Wheel build: passed (no dependencies, no build isolation, no cache).
+Installed wheel outside source checkout: passed.
+Installed CLI version: 1.1.0.
+Installed 28-day demo input hash and numerical metrics match source run.

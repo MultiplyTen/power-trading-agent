@@ -1,0 +1,113 @@
+{
+  "days": 28,
+  "hourly_strategy_rows": 2016,
+  "input_hash": "885a4b29b0fbb1eaab84b1e6201d229fa7c9968047e589239afb5446305ed453",
+  "metrics": {
+    "baseline": {
+      "days": 28,
+      "groups": {
+        "synthetic_spike": {
+          "days": 2,
+          "loss_day_fraction": 0.0,
+          "max_drawdown_cny": 0.0,
+          "mean_daily_incremental_gain_cny": 0.0,
+          "total_incremental_gain_cny": 0.0,
+          "worst_day_gain_cny": 0.0
+        },
+        "weekday": {
+          "days": 18,
+          "loss_day_fraction": 0.0,
+          "max_drawdown_cny": 0.0,
+          "mean_daily_incremental_gain_cny": 0.0,
+          "total_incremental_gain_cny": 0.0,
+          "worst_day_gain_cny": 0.0
+        },
+        "weekend": {
+          "days": 8,
+          "loss_day_fraction": 0.0,
+          "max_drawdown_cny": 0.0,
+          "mean_daily_incremental_gain_cny": 0.0,
+          "total_incremental_gain_cny": 0.0,
+          "worst_day_gain_cny": 0.0
+        }
+      },
+      "loss_day_fraction": 0.0,
+      "max_drawdown_cny": 0.0,
+      "mean_daily_incremental_gain_cny": 0.0,
+      "total_incremental_gain_cny": 0.0,
+      "worst_day_gain_cny": 0.0
+    },
+    "bounded_rule": {
+      "days": 28,
+      "groups": {
+        "synthetic_spike": {
+          "days": 2,
+          "loss_day_fraction": 0.0,
+          "max_drawdown_cny": 0.0,
+          "mean_daily_incremental_gain_cny": 378.13487067866663,
+          "total_incremental_gain_cny": 756.2697413573333,
+          "worst_day_gain_cny": 360.51654629939003
+        },
+        "weekday": {
+          "days": 18,
+          "loss_day_fraction": 1.0,
+          "max_drawdown_cny": 2780.7801459550683,
+          "mean_daily_incremental_gain_cny": -154.4877858863927,
+          "total_incremental_gain_cny": -2780.7801459550683,
+          "worst_day_gain_cny": -255.7684483922203
+        },
+        "weekend": {
+          "days": 8,
+          "loss_day_fraction": 1.0,
+          "max_drawdown_cny": 1131.8264187258465,
+          "mean_daily_incremental_gain_cny": -141.4783023407308,
+          "total_incremental_gain_cny": -1131.8264187258465,
+          "worst_day_gain_cny": -175.04114719423524
+        }
+      },
+      "loss_day_fraction": 0.9285714285714286,
+      "max_drawdown_cny": 3156.3368233235815,
+      "mean_daily_incremental_gain_cny": -112.72631511869933,
+      "total_incremental_gain_cny": -3156.3368233235815,
+      "worst_day_gain_cny": -255.7684483922203
+    },
+    "spread_rule": {
+      "days": 28,
+      "groups": {
+        "synthetic_spike": {
+          "days": 2,
+          "loss_day_fraction": 0.0,
+          "max_drawdown_cny": 0.0,
+          "mean_daily_incremental_gain_cny": 744.3472118573263,
+          "total_incremental_gain_cny": 1488.6944237146527,
+          "worst_day_gain_cny": 697.1880335987662
+        },
+        "weekday": {
+          "days": 18,
+          "loss_day_fraction": 1.0,
+          "max_drawdown_cny": 5766.767101910169,
+          "mean_daily_incremental_gain_cny": -320.3759501061205,
+          "total_incremental_gain_cny": -5766.767101910169,
+          "worst_day_gain_cny": -529.4713641844282
+        },
+        "weekend": {
+          "days": 8,
+          "loss_day_fraction": 1.0,
+          "max_drawdown_cny": 2397.390954051618,
+          "mean_daily_incremental_gain_cny": -299.67386925645224,
+          "total_incremental_gain_cny": -2397.390954051618,
+          "worst_day_gain_cny": -365.5991782108176
+        }
+      },
+      "loss_day_fraction": 0.9285714285714286,
+      "max_drawdown_cny": 6675.463632247134,
+      "mean_daily_incremental_gain_cny": -238.40941543739766,
+      "total_incremental_gain_cny": -6675.463632247134,
+      "worst_day_gain_cny": -529.4713641844282
+    }
+  },
+  "resume_static_manifest_identical": true,
+  "scope": "synthetic",
+  "source_hash": "b09280d7e89b0de509022519a7efc0e6b95cc0e35fe4880b8d6030b90c880573",
+  "version": "1.1.0"
+}

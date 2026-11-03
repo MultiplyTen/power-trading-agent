@@ -1,86 +1,111 @@
 # 电力交易智能体 / Power Trading Agent
 
-面向广东售电侧的电力交易辅助决策框架，连接数据治理、负荷与价格预测、日前申报与月度采购方案、风险校验和复盘。
+**v1.1.0 · 可运行的本地研究版本 / Runnable local research release**
 
-A decision-support framework for electricity retailers in Guangdong, connecting data governance, load and price forecasting, day-ahead declaration and monthly procurement planning, risk validation, and review.
+面向广东售电侧的辅助决策工程。v1.1 将框架落成可运行的快照、组合台账、策略对照、历史回放和独立验收程序。Python 3.9+，运行核心只使用标准库，无需模型账号。
 
-**当前状态：框架设计 v1.0。** 仓库提供业务架构、数据契约、模块接口、实施顺序与验收场景。运行代码、真实模型效果、实际平台连接和部署尚待实现及验证。
+A decision-support project for electricity retailers in Guangdong. v1.1 implements snapshots, portfolio records, strategy comparison, historical replay, and independent acceptance checks. Python 3.9+; the runtime uses only the standard library and requires no model credentials.
 
-**Status: architecture design v1.0.** This repository provides business architecture, data contracts, proposed interfaces, an implementation sequence, and acceptance scenarios. Runtime code, model performance, platform connections, and deployment remain to be implemented and validated.
+**当前范围：合成数据研究闭环。** 结算是明确标识的示例适配器，真实广东规则、真实模型成绩、生产数据连接和交易执行尚未验收。运行入口拒绝未标注为 `synthetic` 的输入。
 
-→ [阅读完整框架 / Read the full framework (Chinese)](docs/power-trading-agent-framework.zh-CN.md)
+**Scope: a complete synthetic research workflow.** Settlement is an explicitly synthetic adapter. Real Guangdong rules, model performance, production data integrations, and trading execution have not been accepted. The runner rejects inputs outside the `synthetic` scope.
 
-## 核心设计 / Core Design
+## 快速开始 / Quick start
 
-**一个总协调器、六类业务能力、一套独立校验与版本台账。**
+下载仓库后，在仓库目录运行；无需先安装依赖。输出目录必须尚不存在，防止覆盖历史结果。
 
-**One coordinator, six business capabilities, and independent validation with versioned records.**
+From the repository directory, run these commands; no dependency installation is needed. Output directories must be new to preserve prior results.
 
-大模型负责理解需求、组织任务、调用工具和解释证据；程序负责电量、费用、结算情景与风险计算；预测模型通过独立评价后使用；交易员选择业务方案。
-
-The language model interprets requests, organizes tasks, calls tools, and explains evidence. Programs calculate energy, costs, settlement scenarios, and risk. Forecasting models require separate evaluation. Traders select business plans.
-
-```mermaid
-flowchart TD
-    U[交易目标 / Trading goals] --> C[总协调器 / Coordinator]
-    C --> D[数据与规则 / Data and rules]
-    D --> L[负荷预测 / Load forecasting]
-    D --> P[价格预测 / Price forecasting]
-    L --> S[申报与采购方案 / Declaration and procurement plans]
-    P --> S
-    H[持仓与合同 / Positions and contracts] --> S
-    S --> V[独立校验 / Independent validation]
-    V --> A[人工选择与导出 / Human selection and export]
-    A --> R[复盘 / Review]
-    X[实际电量价格与结算 / Actuals and settlement] --> R
-    R --> E[候选改进实验 / Candidate improvement experiments]
+```bash
+python3 -m power_trading_agent demo --output runs/demo-v1.1
+python3 -m power_trading_agent verify --output runs/demo-v1.1
+python3 -m power_trading_agent benchmark --output runs/acceptance-v1.1
+python3 -m unittest discover -s tests -v
 ```
 
-## 六类业务能力 / Six Business Capabilities
+演示包含一个组合、两个虚拟客户、28个目标日、3种策略、2016条逐时策略记录。预测为此前可得七天数据的均值；压力情景只使用预测，不读取目标日实测。实测在决策冻结后用于评分。
 
-| 能力 / Capability | 主要产物 / Main output |
+The demo contains one portfolio, two invented customers, 28 delivery days, three strategies, and 2,016 hourly strategy rows. Forecasts use seven earlier available days. Stress scenarios consume forecasts, and realized labels are accessed only after the decision is frozen.
+
+打开 `runs/demo-v1.1/report.md` 查看中英双语报告。完整数值在 `results.json` 和 `hourly.csv`，输入与情景均归档。也可先阅读已执行的[验证记录](docs/validation/v1.1-validation.md)和[示例报告](docs/validation/demo-report.md)。
+
+Open `runs/demo-v1.1/report.md` for the bilingual report. Full numbers are in `results.json` and `hourly.csv`; inputs and scenarios are archived. See the executed [validation record](docs/validation/v1.1-validation.md) and [example report](docs/validation/demo-report.md).
+
+## 已实现能力 / Implemented capabilities
+
+| 能力 / Capability | v1.1 行为 / Behavior |
 | --- | --- |
-| 数据与规则准备 / Data and rule preparation | 可追溯快照、来源版本、缺口和适用规则 / Traceable snapshots, source versions, gaps, and applicable rules |
-| 客户负荷预测 / Customer load forecasting | 逐户及组合负荷、事件修正、评价记录 / Customer and portfolio forecasts, event adjustments, evaluation records |
-| 市场与价格研究 / Market and price research | 用户侧 DA、RT、价差与联合情景 / User-side DA, RT, spreads, and joint scenarios |
-| 申报与采购方案 / Declaration and procurement planning | 日前基准与候选、月度持仓及采购比较 / Day-ahead baselines and candidates, monthly positions and procurement comparisons |
-| 规则与风险校验 / Rule and risk validation | 时点、版本、单位、费用复算和风险检查 / Cutoff, version, unit, cost-recalculation, and risk checks |
-| 复盘与改进 / Review and improvement | 预测、建议、采用、实际与结算的对照 / Comparison of forecasts, recommendations, adopted plans, actuals, and settlement |
+| 事前快照 / As-of snapshots | 按实际可得时点选修订，拒绝缺点、口径冲突及版本倒序 / Select available revisions; reject missing cells, basis conflicts, and inconsistent versions |
+| 组合台账 / Portfolio ledger | SQLite 保存成交、采购意图、申报、客户事件；幂等接收与历史修订 / Separate filled trades, intentions, declarations, and customer events with idempotent revision history |
+| 客户事件 / Customer events | 确认后的停复工影响对应客户及小时；歧义文字返回待澄清 / Confirmed events affect only the relevant customer and hours; ambiguous text requires clarification |
+| 策略对照 / Strategy comparison | 同一 F 下比较 k=1、价差规则、半幅价差规则 / Compare baseline, spread rule, and half-adjustment rule on the same forecast |
+| 数值风险接口 / Numerical risk API | 压力情景与概率情景分离；支持权重分数尾部 CVaR90，预算缺失不自动选择 / Separate stress and probability metrics; support fractional-tail weighted CVaR90; no automatic choice with missing budget |
+| 历史回放 / Replay | 记录成本、相对增益、最差日、最大回撤和分组样本量 / Record costs, incremental gain, worst day, drawdown, and group counts |
+| 本地协调 / Local coordination | 持久任务、执行代际、旧结果拒绝、取消与版本绑定选择；可恢复中断回放 / Durable tasks, generations, stale-result rejection, cancellation, version-bound selection, and replay recovery |
+| 独立验收 / Independent acceptance | 固定业务案例及标准答案，与运行服务分开；金额与状态均评分 / Fixed business cases and oracle expectations separate from runtime services |
+| 工具入口 / Tool interface | 有限 JSON 工具目录，可供后续模型宿主调用 / Bounded JSON tools ready for an optional model host |
 
-## 关键业务约定 / Business Invariants
+策略均为可解释的规则基线；尚未实现约束优化器或强化学习。概率接口中的 `validated` 是调用方声明，不代表本仓库已完成概率校准；默认演示只提供无概率权重的压力情景。
 
-- **信息截点 / Information cutoff**：仅使用冻结时点前实际可得的数据，保留来源与修订版本。Use only data actually available before the forecast origin; retain provenance and revisions.
-- **数量定义 / Quantity definitions**：F为预测负荷，L为实际或情景负荷，Q为申报量，候选Q=kF，单位MWh。F is forecast load, L is actual/scenario load, and Q is declared energy; candidate Q=kF, in MWh.
-- **价格口径 / Price basis**：DA、RT使用同一适用用户侧口径，S=RT−DA，单位元/MWh；节点价格研究单列。Use a consistent applicable user-side basis for DA and RT, with S=RT−DA in CNY/MWh; keep nodal-price research separate.
-- **公平比较 / Fair comparison**：日前候选相对k=1，在相同持仓、规则、费用与情景下比较；月度采购独立建模。Compare day-ahead candidates with k=1 using the same positions, rules, costs, and scenarios; model monthly procurement separately.
-- **版本绑定 / Version binding**：输入修订形成新结果；人工对旧方案的选择不自动延伸到新版。Input revisions produce new results; selection of an older plan does not automatically cover a revised plan.
-- **证据与状态 / Evidence and status**：区分研究、历史回放、影子运行和业务采用；缺失不填0，演示成功不作为生产能力证明。Distinguish research, historical replay, shadow operation, and business adoption; missing values are not zero, and demo success does not establish production capability.
+Strategies are transparent rule baselines; a constrained optimizer and reinforcement learning are not implemented. `validated` in the probability interface is a caller assertion, not a calibration result produced by this repository. The default demo uses unweighted stress scenarios only.
 
-具体规则必须按适用市场、主体、品种与有效期核实。文档不认定某项结算政策为现行有效，也不承诺预测收益。
+## 工作流 / Workflow
 
-Verify concrete rules for the applicable market, entity, product, and effective period. The document does not certify current settlement policy or promise forecasting returns.
+```mermaid
+flowchart LR
+    I[合成输入 / Synthetic inputs] --> S[时点快照 / As-of snapshot]
+    E[版本事件 / Versioned events] --> P[组合状态 / Portfolio state]
+    S --> F[客户修正 / Customer adjustments]
+    P --> F
+    F --> C[同预测策略对照 / Fixed-forecast comparison]
+    C --> R[压力检查与冻结 / Stress checks and freeze]
+    A[后续实测 / Realized labels] --> V[独立评分 / Scoring]
+    R --> V
+    V --> O[报告与校验 / Report and verification]
+```
 
-## 分阶段建设 / Delivery Stages
+沿用“一个协调器、业务服务、独立校验”的设计；v1.1 的协调器是确定性本地程序。JSON 工具可供模型选择调用，但当前未连接 DeepSeek Harness、外部 LLM 或交易平台。
 
-| 阶段 / Stage | 交付目标 / Deliverable |
+The design retains one coordinator, business services, and independent validation. The v1.1 coordinator is deterministic and local. JSON tools can be called by a model host, but DeepSeek Harness, an external LLM, and exchange platforms are not connected in this release.
+
+## 输入、恢复与工具 / Inputs, recovery, and tools
+
+生成一份可编辑的合成输入，再运行自己的研究配置：
+
+Generate an editable synthetic input and run a research configuration:
+
+```bash
+python3 -m power_trading_agent sample --output local/synthetic-input.json
+python3 -m power_trading_agent run --input local/synthetic-input.json --output runs/custom-v1.1
+python3 -m power_trading_agent resume --output runs/custom-v1.1
+python3 -m power_trading_agent tools
+python3 -m power_trading_agent tool --request examples/customer-event-request.json
+```
+
+`resume` 要求输入和代码未改变，复用已完成任务，重启未完成任务并拒绝旧执行器提交。修改输入、规则或代码后应使用新输出目录。自然语言入口仅支持文档中的绝对日期停工模板，输出仍为待确认事件；它不是通用语言理解模型。
+
+`resume` requires unchanged inputs and code, reuses completed tasks, and restarts incomplete tasks with stale-worker rejection. Use a new output directory after changing input, rules, or code. Text intake supports only the documented absolute-date shutdown template and returns a pending event; it is not a general language model.
+
+每个输出目录包含 / Each output directory contains:
+
+| 文件 / File | 用途 / Purpose |
 | --- | --- |
-| P0 业务与输入基线 / Scope and inputs | 一个客户组合、价格口径、数据可得性与规则来源 / One portfolio, price basis, data availability, and rule sources |
-| P1 最小闭环 / Minimum complete workflow | 单目标日24小时候选报告、可复算结果、任务恢复 / A 24-hour candidate report for one target day, reproducible calculations, and task recovery |
-| P2 历史与影子评价 / Historical and shadow evaluation | 时间滚动评价、校准检查与风险对照 / Rolling evaluation, calibration checks, and risk comparisons |
-| P3 日常辅助运行 / Routine decision support | 资料更新、方案、重要通知、人工选择与复盘 / Input updates, plans, meaningful notifications, human selection, and review |
-| P4 可选执行连接 / Optional execution integration | 经授权且独立验收的平台连接、回执与对账 / Separately authorized and validated platform adapters, receipts, and reconciliation |
+| `input.json`, `run_meta.json` | 冻结输入、版本与代码摘要 / Frozen input, version, and source hash |
+| `ledger.sqlite3` | 本地可变台账，保存事件与任务；不属于静态文件校验清单 / Mutable local event/task ledger, excluded from static file checksums |
+| `results.json` | 快照、完整情景、候选曲线、评分与分组 / Snapshots, scenarios, plans, scores, and groups |
+| `hourly.csv`, `report.md` | 可核查明细与双语报告 / Inspectable detail and bilingual report |
+| `manifest.json` | 静态产物摘要；verify 另做独立公式及逐时勾稽 / Static hashes plus independent arithmetic and hourly reconciliation via verify |
 
-首版建议完成“一个客户组合、一个目标日、24小时日前辅助分析”，再扩展多日与月度任务。框架文档列出了接口、异常处理、故障场景与具体实施任务。
+## 文档与后续 / Documentation and next steps
 
-Start with one portfolio, one target day, and 24-hour day-ahead decision support, then extend to multiday and monthly workflows. The framework specifies interfaces, error handling, failure scenarios, and implementation tasks.
+- [v1.1 计算方法与参考 / Methodology and references](docs/v1.1-methodology.md)
+- [v1.1 接口契约 / Service contracts](docs/v1.1-contracts.md)
+- [实施与验证记录 / Implementation record](docs/workflow/05-implementation-v1.1.md)
+- [v1.0 历史架构 / Original architecture baseline](docs/power-trading-agent-framework.zh-CN.md)
+- [DeepSeek Harness 开发 Skill / Development skills](https://github.com/MultiplyTen/deepseek-harness-skills)
 
-## 文件与参考 / Files and References
+后续按真实数据就绪、适用规则确认、模型滚动评价、影子运行的顺序推进。模型升级固定策略评价，策略升级固定预测评价；智能体升级单独评价时间、错误和调用成本。真实客户、合同、持仓、凭据继续保留在本地私密区。
 
-- [完整框架 v1.0（中文）/ Full framework v1.0 (Chinese)](docs/power-trading-agent-framework.zh-CN.md)
-- [DeepSeek Harness 开发 Skill 套装 / Development skills](https://github.com/MultiplyTen/deepseek-harness-skills)
+Next steps are real-data readiness, applicable rule confirmation, rolling model evaluation, and shadow operation. Evaluate models under fixed policies, policies under fixed forecasts, and agents separately for time, errors, and tool cost. Real customer, contract, position, and credential data remain private and local.
 
-本项目将上述 Skill 的配置、生命周期、服务组合、打包和 Super-agent 方法应用到电力业务设计中。它是独立项目；本仓库仅包含公开设计资料，不附带作者的私有业务项目、客户明细、持仓合同或凭据。
-
-This independent project applies the skills' configuration, lifecycle, service composition, packaging, and Super-agent methods to electricity-market workflows. It contains public design materials only; private business projects, customer details, positions, contracts, and credentials are not included.
-
-更新时间 / Updated: **2026-11-02**
+更新时间 / Updated: **2026-11-03**

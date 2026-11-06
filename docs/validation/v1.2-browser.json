@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-06",
+  "browser": "Google Chrome via Playwright CLI",
+  "scope": "synthetic_local_only",
+  "desktop_viewport": [
+    1280,
+    960
+  ],
+  "mobile_viewport": [
+    390,
+    844
+  ],
+  "mobile_document_width": 390,
+  "default_choice": "empty",
+  "conservative_eligible_count": 1,
+  "steady_eligible_count": 2,
+  "aggressive_eligible_count": 7,
+  "draft_export": "choice-request.json; independently accepted by decide CLI",
+  "month_chart_points": 30,
+  "risk_and_review_console_errors": 0,
+  "screenshots_sha256": {
+    "risk-desktop.png": "32ff631253ec75be0064be4f58f9dfbba74d323e0946f3b27dc1894f777b3f67",
+    "risk-mobile.png": "e69aa1e2b9f1a0232cc01665fd2520cc490ce2be32d9e8ae22eab7f249915eab",
+    "review-desktop.png": "6048ffaad0053afad83e9dcc437d578a01b33f482553354e806f83f5de618ffd"
+  },
+  "screenshots_location": "local outputs/risk-review-v1.2/browser-evidence (not published)",
+  "browser_launch_note": "Temporary Chrome required desktop process permission; Unix socket used a short task-specific path because of platform path-length limits."
+}

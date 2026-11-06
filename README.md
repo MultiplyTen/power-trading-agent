@@ -1,6 +1,6 @@
 # 电力交易智能体 / Power Trading Agent
 
-**v1.1.0 · 可运行的本地研究版本 / Runnable local research release**
+**v1.2.0 · 多维风控与决策复盘 / Multidimensional risk and decision review**
 
 面向广东售电侧的辅助决策工程。v1.1 将框架落成可运行的快照、组合台账、策略对照、历史回放和独立验收程序。Python 3.9+，运行核心只使用标准库，无需模型账号。
 
@@ -9,6 +9,26 @@ A decision-support project for electricity retailers in Guangdong. v1.1 implemen
 **当前范围：合成数据研究闭环。** 结算是明确标识的示例适配器，真实广东规则、真实模型成绩、生产数据连接和交易执行尚未验收。运行入口拒绝未标注为 `synthetic` 的输入。
 
 **Scope: a complete synthetic research workflow.** Settlement is an explicitly synthetic adapter. Real Guangdong rules, model performance, production data integrations, and trading execution have not been accepted. The runner rejects inputs outside the `synthetic` scope.
+
+## v1.2 新增 / New in v1.2
+
+在 v1.1 基础上新增离线风控决策台与独立复盘页。三档限额覆盖价格、电量、合成偏差费用、持仓、支出代理量与新增损失；由你选择档位和方案。默认 9 项限额全部未填写，缺失或超限会阻断新选择。演示阈值仅用于展示，不是经营建议。
+
+v1.2 adds an offline risk workspace and a separate review view. Three profiles contain nine independent limits across price, volume, synthetic fees, positions, outflow proxies, and incremental loss. You choose the profile and plan. All default limits are unset; missing or breached limits block new choices. Demo limits are illustrative only.
+
+```bash
+python3 -m power_trading_agent risk-demo --output runs/risk-demo
+python3 -m power_trading_agent review-demo --output runs/review-day
+python3 -m power_trading_agent review-demo --period-type month --output runs/review-month
+```
+
+打开 `runs/risk-demo/risk/risk.html` 比较 35 个压力场景与 11 个候选方案，导出研究选择草稿。打开 `runs/review-day/review/review.html` 查看当时选择、事前冻结的可行参考与仅供解释的事后参照。未提供执行证据时，选择不会被称为实际成交。月度按月单独复盘，用月前同一信息时点覆盖整月；当前仍是合成结算研究视图。
+
+Open `runs/risk-demo/risk/risk.html` to compare 35 stress scenarios and 11 candidate plans and export a research choice draft. Open `runs/review-day/review/review.html` for the recorded choice, frozen ex-ante references, and explanatory hindsight comparison. A choice is not treated as execution without execution evidence. Monthly reviews freeze one origin before the entire calendar month and remain a synthetic accounting research view.
+
+- [逐项解释、完整操作与边界 / Detailed guide and workflow](docs/risk-review-guide.md)
+- [输入输出契约 / Contracts](docs/risk-review-contracts.md)
+- [v1.2 验证记录 / Validation](docs/validation/v1.2-validation.md)
 
 ## 快速开始 / Quick start
 
@@ -108,4 +128,4 @@ python3 -m power_trading_agent tool --request examples/customer-event-request.js
 
 Next steps are real-data readiness, applicable rule confirmation, rolling model evaluation, and shadow operation. Evaluate models under fixed policies, policies under fixed forecasts, and agents separately for time, errors, and tool cost. Real customer, contract, position, and credential data remain private and local.
 
-更新时间 / Updated: **2026-11-03**
+更新时间 / Updated: **2026-11-06**

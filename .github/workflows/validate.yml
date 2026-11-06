@@ -34,3 +34,7 @@ jobs:
           python -m pip install .
           cd "$RUNNER_TEMP"
           power-trading-agent --version
+      - name: Daily and monthly decision review
+        run: |
+          python -m power_trading_agent review-demo --output runs/risk-review-day
+          python -m power_trading_agent review-demo --period-type month --output runs/risk-review-month

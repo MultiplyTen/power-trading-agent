@@ -22,9 +22,67 @@ def main(argv=None):
     commands.add_parser("sample").add_argument("--output", required=True, help="new JSON file")
     commands.add_parser("tools")
     commands.add_parser("tool").add_argument("--request", required=True, help="JSON request file, or - for stdin")
+    for name in ("risk-demo", "review-demo"):
+        sub = commands.add_parser(name)
+        sub.add_argument("--output", required=True)
+        sub.add_argument("--period-type", choices=("day", "month"), default="day")
+        sub.add_argument("--period")
+    sub = commands.add_parser("risk")
+    sub.add_argument("--input", required=True, help="known-only context JSON")
+    sub.add_argument("--profiles")
+    sub.add_argument("--stress")
+    sub.add_argument("--candidates")
+    sub.add_argument("--output", required=True)
+    sub = commands.add_parser("risk-from-bundle")
+    sub.add_argument("--input", required=True)
+    sub.add_argument("--target-date", required=True)
+    sub.add_argument("--origin", required=True)
+    sub.add_argument("--profiles")
+    sub.add_argument("--output", required=True)
+    sub = commands.add_parser("decide")
+    sub.add_argument("--risk", required=True)
+    sub.add_argument("--request", required=True)
+    sub.add_argument("--output", required=True)
+    sub = commands.add_parser("review")
+    for field in ("risk", "decision", "actuals", "output"):
+        sub.add_argument("--" + field, required=True)
+    sub.add_argument("--execution")
+    sub = commands.add_parser("experiment-register")
+    sub.add_argument("--proposal", required=True)
+    sub.add_argument("--reviews", nargs="+", required=True)
+    sub.add_argument("--output", required=True, help="new experiment JSON file")
     args = parser.parse_args(argv)
+    def read(path):
+        return json.loads(Path(path).read_text(encoding="utf-8")) if path else None
     try:
-        if args.command in ("demo", "run", "resume"):
+        if args.command in ("risk-demo", "review-demo"):
+            from .risk_workflow import demo_workspaces
+            result = demo_workspaces(args.output, args.period_type, args.period, args.command == "review-demo")
+        elif args.command in ("risk", "risk-from-bundle"):
+            from .risk_workflow import create_risk_workspace, context_from_bundle
+            context = read(args.input)
+            if args.command == "risk-from-bundle":
+                context = context_from_bundle(context, args.target_date, args.origin)
+            report = create_risk_workspace(context, args.output, read(args.profiles),
+                                           read(getattr(args, "stress", None)), read(getattr(args, "candidates", None)))
+            result = {"report_hash": report["report_hash"], "status": report["status"], "output": args.output}
+        elif args.command == "decide":
+            from .risk_workflow import create_decision_workspace
+            result = create_decision_workspace(read(args.risk), read(args.request), args.output)
+        elif args.command == "review":
+            from .risk_workflow import create_review_workspace
+            report = create_review_workspace(read(args.risk), read(args.decision), read(args.actuals),
+                                             args.output, read(args.execution))
+            result = {"review_hash": report["review_hash"], "status": report["status"], "output": args.output}
+        elif args.command == "experiment-register":
+            from .review import register_experiment
+            result = register_experiment(read(args.proposal), [read(p) for p in args.reviews])
+            path = Path(args.output)
+            if path.exists():
+                raise ValidationError("OUTPUT_EXISTS", "use a new experiment file")
+            path.parent.mkdir(parents=True, exist_ok=True)
+            write_json(path, result)
+        elif args.command in ("demo", "run", "resume"):
             from .runner import run_bundle
             if args.command == "demo":
                 from .synthetic import demo_bundle

@@ -1,0 +1,78 @@
+{
+  "day": {
+    "period": "2026-11-05",
+    "origin": "2026-11-04T12:00:00+08:00",
+    "hours": 24,
+    "scenario_count": 35,
+    "plan_count": 11,
+    "eligible_counts": {
+      "conservative": 1,
+      "steady": 2,
+      "aggressive": 7
+    },
+    "report_hash": "28036dace45f2078048ee5df54915cded1e46ebdbfbfab3e2ab10502986c8a91",
+    "review_hash": "7ab8714807c6874d5a4dd68dab7f5ae2a58ce68b18c3a685af3e571158c99275",
+    "chosen": {
+      "cost_cny": 195987.24936318773,
+      "fee_cny": 168.4881,
+      "incremental_gain_cny": 4275.125963759667,
+      "name": "bounded_rule",
+      "plan_hash": "2fb51e7a674ce623efa79dc77a8e6dca0fe51bea3c6ac2d3b33abda1f8d3420c",
+      "plan_id": "bounded_rule-af8285855a6f7515"
+    },
+    "hindsight": {
+      "candidate_count": 2,
+      "chosen_in_comparison_set": true,
+      "cost_cny": 195987.24936318773,
+      "fee_cny": 168.4881,
+      "gap_interpretation": "within_set_hindsight_gap",
+      "gap_to_chosen_cny": 0.0,
+      "incremental_gain_cny": 4275.125963759667,
+      "name": "bounded_rule",
+      "not_an_achievable_policy_target": true,
+      "plan_hash": "2fb51e7a674ce623efa79dc77a8e6dca0fe51bea3c6ac2d3b33abda1f8d3420c",
+      "plan_id": "bounded_rule-af8285855a6f7515",
+      "selection_basis": "hindsight_only_within_frozen_admissible_candidates"
+    },
+    "execution_status": "not_provided",
+    "bridge_reconciliation_error_cny": 0.0
+  },
+  "month": {
+    "period": "2026-11",
+    "origin": "2026-10-31T12:00:00+08:00",
+    "hours": 720,
+    "scenario_count": 35,
+    "plan_count": 11,
+    "eligible_counts": {
+      "conservative": 1,
+      "steady": 2,
+      "aggressive": 7
+    },
+    "report_hash": "4ffc8824a2922a76dd41c7e59439db8ad7fc5f0cf66b28c73b613091e3277ada",
+    "review_hash": "2c8463025d7b84058a61171e4cd203b9b6fa5ddc87dce295040bd15f5c50cfbe",
+    "chosen": {
+      "cost_cny": 4569053.817548029,
+      "fee_cny": 4422.691307400001,
+      "incremental_gain_cny": 5917.617585264146,
+      "name": "bounded_rule",
+      "plan_hash": "a83683f12d406af7877ce43bf9262304ba46ded45a9e8f708e906182c5899f1a",
+      "plan_id": "bounded_rule-c5c276e5a542db52"
+    },
+    "hindsight": {
+      "candidate_count": 2,
+      "chosen_in_comparison_set": true,
+      "cost_cny": 4569053.817548029,
+      "fee_cny": 4422.691307400001,
+      "gap_interpretation": "within_set_hindsight_gap",
+      "gap_to_chosen_cny": 0.0,
+      "incremental_gain_cny": 5917.617585264146,
+      "name": "bounded_rule",
+      "not_an_achievable_policy_target": true,
+      "plan_hash": "a83683f12d406af7877ce43bf9262304ba46ded45a9e8f708e906182c5899f1a",
+      "plan_id": "bounded_rule-c5c276e5a542db52",
+      "selection_basis": "hindsight_only_within_frozen_admissible_candidates"
+    },
+    "execution_status": "not_provided",
+    "bridge_reconciliation_error_cny": 0.0
+  }
+}

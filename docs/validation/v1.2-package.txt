@@ -1,0 +1,4 @@
+Python 3.12.14; built wheel 1.2.0; installed outside source.
+Installed daily risk and review JSON exactly match source output.
+No third-party runtime dependencies.
+Wheel SHA256: 0752729f431fee8c385aa707c7ca902b4468b18e47e95dbd232010afd09532fd

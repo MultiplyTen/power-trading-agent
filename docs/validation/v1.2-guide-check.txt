@@ -1,0 +1,103 @@
+Executed all 5 Bash blocks in the bilingual guide, in a fresh directory.
+Exit code: 0
+{
+  "scope": "synthetic",
+  "status": "research_only",
+  "period_type": "day",
+  "period": "2026-11-05",
+  "risk_report": "outputs/risk-day-demo/risk/risk.html",
+  "scenario_count": 35,
+  "plan_count": 11,
+  "limits_source": "illustrative_example_not_operating_limits"
+}
+{
+  "scope": "synthetic",
+  "status": "research_only",
+  "period_type": "day",
+  "period": "2026-11-05",
+  "risk_report": "outputs/review-day-demo/risk/risk.html",
+  "scenario_count": 35,
+  "plan_count": 11,
+  "limits_source": "illustrative_example_not_operating_limits",
+  "review_report": "outputs/review-day-demo/review/review.html",
+  "review_id": "review-b1246344c41031980c7906a2"
+}
+{
+  "scope": "synthetic",
+  "status": "research_only",
+  "period_type": "month",
+  "period": "2026-11",
+  "risk_report": "outputs/review-month-demo/risk/risk.html",
+  "scenario_count": 35,
+  "plan_count": 11,
+  "limits_source": "illustrative_example_not_operating_limits",
+  "review_report": "outputs/review-month-demo/review/review.html",
+  "review_id": "review-bc6f9955fe894894aa799432"
+}
+{
+  "report_hash": "604db875e721e91d5987898a50d30815ec773565795f1be43f9a1d707132b732",
+  "status": "research_only",
+  "output": "outputs/risk-unconfigured"
+}
+{
+  "report_hash": "28036dace45f2078048ee5df54915cded1e46ebdbfbfab3e2ab10502986c8a91",
+  "status": "research_only",
+  "output": "outputs/risk-configured"
+}
+{
+  "schema_version": "risk-review-1",
+  "scope": "synthetic",
+  "record_type": "declared_research_choice",
+  "report_hash": "28036dace45f2078048ee5df54915cded1e46ebdbfbfab3e2ab10502986c8a91",
+  "report_id": "risk-0997526ec7db09a8583cced9",
+  "portfolio_id": "research-portfolio",
+  "period_type": "day",
+  "period": "2026-11-05",
+  "profile_id": "steady",
+  "plan_id": "baseline-9fd7de595f271669",
+  "plan_hash": "b10827147a73db2e8de16d93fd485c4d66fbaa5714f9eaf3b13f52111412c14f",
+  "actor": "fictional-demo-operator",
+  "reason": "Fictional baseline choice for the command example only",
+  "selected_at": "2026-11-04T12:10:00+08:00",
+  "admissibility_status": "eligible",
+  "violations": [],
+  "missing_limits": [],
+  "identity_and_time_evidence": "caller_declared_not_authenticated",
+  "decision_id": "decision-ab39a912972fe47ed0f17ac3",
+  "decision_hash": "4dc3379313302f2e1aecbc1f341e25c6ea6e68d5c6a8d100dd670d19d6b6afc3"
+}
+{
+  "review_hash": "667652ace83ee739b41585322f635de3dbe3d7d140e08d846fbb1f55cebf216c",
+  "status": "research_only",
+  "output": "outputs/recorded-review"
+}
+{
+  "schema_version": "risk-review-1",
+  "scope": "synthetic",
+  "status": "proposed_not_validated",
+  "proposal": {
+    "hypothesis": "Smaller actions reduce worst daily additional loss in a later period",
+    "change": "Freeze this candidate specification; keep forecasts and other limits unchanged",
+    "registered_at": "2026-11-06T07:00:00+08:00",
+    "test_start": "2026-11-07T07:00:00+08:00",
+    "test_end": "2026-12-07T07:00:00+08:00",
+    "metric": "worst daily additional loss and mean cost on the untouched test period",
+    "baseline": "the frozen existing candidate specification and selection rule",
+    "acceptance": "Lower worst daily loss, no higher mean cost, and no new limit breaches",
+    "frozen_candidate_hash": "c5f2aa1ad583520f51162f2dc509da0cd44c59d0871b068c62d3758f1f9ff987"
+  },
+  "test_start": "2026-11-07T07:00:00+08:00",
+  "test_end": "2026-12-07T07:00:00+08:00",
+  "test_interval_convention": "[start,end)",
+  "review_ids": [
+    "review-2ff50ef210c934b412d200ab"
+  ],
+  "review_hashes": [
+    "667652ace83ee739b41585322f635de3dbe3d7d140e08d846fbb1f55cebf216c"
+  ],
+  "latest_review_data_available_time": "2026-11-06T06:00:00+08:00",
+  "automatic_promotion": false,
+  "timestamp_evidence": "caller_declared_not_authenticated",
+  "experiment_id": "experiment-826d73605a61c2b253260631",
+  "experiment_hash": "12280a901ad6b8beb03ba8c2a453fb15d54c91dbed05bc0a834a9ded3da22064"
+}
